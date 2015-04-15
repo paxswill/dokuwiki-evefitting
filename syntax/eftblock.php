@@ -82,6 +82,7 @@ class syntax_plugin_evefitting_eftblock extends DokuWiki_Syntax_Plugin {
                     break;
                 case DOKU_LEXER_UNMATCHED:
                     $renderer->doc .= $renderer->_xmlEntities($match);
+                    break;
                 case DOKU_LEXER_EXIT:
                     $renderer->doc .= '</div>';
                     break;
