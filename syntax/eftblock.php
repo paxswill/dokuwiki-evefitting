@@ -10,23 +10,26 @@
 if (!defined('DOKU_INC')) die();
 
 class syntax_plugin_evefitting_eftblock extends DokuWiki_Syntax_Plugin {
+
     /**
      * @return string Syntax mode type
      */
     public function getType() {
-        return 'FIXME: container|baseonly|formatting|substition|protected|disabled|paragraphs';
+        return 'protected';
     }
+
     /**
      * @return string Paragraph type
      */
     public function getPType() {
-        return 'FIXME: normal|block|stack';
+        return 'normal';
     }
+
     /**
      * @return int Sort order - Low numbers go before high numbers
      */
     public function getSort() {
-        return FIXME;
+        return 20;
     }
 
     /**
@@ -35,13 +38,12 @@ class syntax_plugin_evefitting_eftblock extends DokuWiki_Syntax_Plugin {
      * @param string $mode Parser mode
      */
     public function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('<FIXME>',$mode,'plugin_evefitting_eftblock');
-//        $this->Lexer->addEntryPattern('<FIXME>',$mode,'plugin_evefitting_eftblock');
+        $this->Lexer->addEntryPattern('<EFT>\n?',$mode,'plugin_evefitting_eftblock');
     }
 
-//    public function postConnect() {
-//        $this->Lexer->addExitPattern('</FIXME>','plugin_evefitting_eftblock');
-//    }
+    public function postConnect() {
+        $this->Lexer->addExitPattern('</EFT>','plugin_evefitting_eftblock');
+    }
 
     /**
      * Handle matches of the evefitting syntax
@@ -53,9 +55,14 @@ class syntax_plugin_evefitting_eftblock extends DokuWiki_Syntax_Plugin {
      * @return array Data for the renderer
      */
     public function handle($match, $state, $pos, Doku_Handler &$handler){
-        $data = array();
-
-        return $data;
+        switch($state) {
+            case DOKU_LEXER_ENTER:
+            case DOKU_LEXER_EXIT:
+                return array($state, '');
+            case DOKU_LEXER_UNMATCHED:
+                return array($state, $match);
+        }
+        return array();
     }
 
     /**
@@ -67,6 +74,19 @@ class syntax_plugin_evefitting_eftblock extends DokuWiki_Syntax_Plugin {
      * @return bool If rendering was successful.
      */
     public function render($mode, Doku_Renderer &$renderer, $data) {
+        if($mode == 'xhtml') {
+            list($state, $match) = $data;
+            switch($state) {
+                case DOKU_LEXER_ENTER:
+                    $renderer->doc .= '<div class="eft-block">';
+                    break;
+                case DOKU_LEXER_UNMATCHED:
+                    $renderer->doc .= $renderer->_xmlEntities($match);
+                case DOKU_LEXER_EXIT:
+                    $renderer->doc .= '</div>';
+                    break;
+            }
+        }
         if($mode != 'xhtml') return false;
 
         return true;
