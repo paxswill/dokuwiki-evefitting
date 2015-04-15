@@ -2,7 +2,6 @@
 	display: inline-block;
 	white-space: pre;
 	background: @ini_background_alt;
-	color: @ini_text_alt;
 	padding: 1em;
 	border-radius: 0.25em;
 }
