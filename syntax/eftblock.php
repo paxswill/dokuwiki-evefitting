@@ -42,6 +42,7 @@ class syntax_plugin_evefitting_eftblock extends DokuWiki_Syntax_Plugin {
     }
 
     public function postConnect() {
+        $this->Lexer->addPattern('\[.*?\]\n','plugin_evefitting_eftblock');
         $this->Lexer->addExitPattern('</EFT>','plugin_evefitting_eftblock');
     }
 
@@ -59,6 +60,7 @@ class syntax_plugin_evefitting_eftblock extends DokuWiki_Syntax_Plugin {
             case DOKU_LEXER_ENTER:
             case DOKU_LEXER_EXIT:
                 return array($state, '');
+            case DOKU_LEXER_MATCHED:
             case DOKU_LEXER_UNMATCHED:
                 return array($state, $match);
         }
@@ -79,6 +81,10 @@ class syntax_plugin_evefitting_eftblock extends DokuWiki_Syntax_Plugin {
             switch($state) {
                 case DOKU_LEXER_ENTER:
                     $renderer->doc .= '<div class="eft-block">';
+                    break;
+                case DOKU_LEXER_MATCHED:
+                    $renderer->doc .= '<span class="eft-header">';
+                    $renderer->doc .= $match . '</span>';
                     break;
                 case DOKU_LEXER_UNMATCHED:
                     $renderer->doc .= $renderer->_xmlEntities($match);
