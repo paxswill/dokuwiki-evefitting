@@ -1,0 +1,7 @@
+base   evefitting
+author Will Ross
+email  paxswill@paxswill.com
+date   2015-04-15
+name   evefitting plugin
+desc   Eve Online Fitting Block formatting
+url    http://paxswill.com
