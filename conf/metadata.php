@@ -6,5 +6,6 @@
  */
 
 
-//$meta['fixme'] = array('string');
-
+$meta['dsn'] = array('string');
+$meta['username'] = array('string');
+$meta['password'] = array('password');

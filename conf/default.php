@@ -5,4 +5,6 @@
  * @author Will Ross <paxswill@paxswill.com>
  */
 
-//$conf['fixme']    = 'FIXME';
+$conf['dsn'] = '';
+$conf['username'] = '';
+$conf['password'] = '';
