@@ -125,7 +125,10 @@ class syntax_plugin_evefitting_eftblock extends DokuWiki_Syntax_Plugin {
                     break;
                 case DOKU_LEXER_UNMATCHED:
                     $cleaned = $renderer->_xmlEntities($data['eftblock']);
-                    $renderer->doc .= $cleaned;
+                    list($header, $modules) = explode("\n", $cleaned, 2);
+                    $renderer->doc .= "<span class='eft-header' data-dna='";
+                    $renderer->doc .= $data['dna'] . "'>" . $header;
+                    $renderer->doc .= "</span>\n" . $modules;
                     break;
                 case DOKU_LEXER_EXIT:
                     $renderer->doc .= '</div>';
