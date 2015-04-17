@@ -217,15 +217,17 @@ class syntax_plugin_evefitting_eftblock extends DokuWiki_Syntax_Plugin {
                     'name' => $matches[1],
                     'quantity' => $matches[2],
                 );
-            } else if($trimmed[0] != '[' || $trimmed != '') {
+            } else if($trimmed[0] != '[') {
                 // Skip lines starting with a bracket, as they're things like,
                 // "[Empty High Slot]".
                 $exploded = explode(",", $trimmed, 2);
                 foreach($exploded as $exploded_token) {
-                    $tokens[] = array(
-                        'name' => $exploded_token,
-                        'quantity' => 1,
-                    );
+                    if(strlen($exploded_token)) {
+                        $tokens[] = array(
+                            'name' => trim($exploded_token),
+                            'quantity' => 1,
+                        );
+                    }
                 }
             }
         }
