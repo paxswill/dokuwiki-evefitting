@@ -11,30 +11,20 @@ if(!defined('DOKU_INC')) die();
 
 class action_plugin_evefitting_toolbar extends DokuWiki_Action_Plugin {
 
-    /**
-     * Registers a callback function for a given event
-     *
-     * @param Doku_Event_Handler $controller DokuWiki's event controller object
-     * @return void
-     */
     public function register(Doku_Event_Handler $controller) {
-
-       $controller->register_hook('TOOLBAR_DEFINE', 'FIXME', $this, 'handle_toolbar_define');
-   
+       $controller->register_hook('TOOLBAR_DEFINE', 'AFTER', $this, 'insert_toolbar');
     }
 
-    /**
-     * [Custom event handler which performs action]
-     *
-     * @param Doku_Event $event  event object by reference
-     * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
-     *                           handler was registered]
-     * @return void
-     */
-
-    public function handle_toolbar_define(Doku_Event &$event, $param) {
+    public function insert_toolbar(Doku_Event &$event, $param) {
+        $event->data[] = array (
+            'type' => 'format',
+            'title' => 'EFT block',
+            'icon' => '../../plugins/evefitting/fitting.png',
+            'open' => '<EFT>',
+            'close' => '</EFT>',
+            'sample' => '\n',
+        );
     }
-
 }
 
 // vim:ts=4:sw=4:et:
