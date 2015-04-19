@@ -6,6 +6,10 @@ jQuery(document).ready(function() {
         dna = $element.data('dna'),
         url = "https://o.smium.org/loadout/dna/" + dna + '?mangle=0',
         $newHeader = jQuery("<a href='#'></a>");
+    // Skip empty DNA strings
+    if(dna === "") {
+      return true;
+    }
     if(typeof CCPEVE !== "undefined") {
       // It doesn't seem like the IGB actually executes this JS file. If it
       // does, this /should/ work, but it's a pretty narrow use case.
